@@ -1,3 +1,9 @@
+.git
+.settings
+bin
+.classpath
+.gitignore
+.project
 build
 nbproject
 build.xml
