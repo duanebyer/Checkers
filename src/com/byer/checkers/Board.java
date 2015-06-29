@@ -20,6 +20,9 @@ public final class Board {
         this.data[7][1] = this.data[7][3] = this.data[7][5] = this.data[7][7] = PieceType.BlackChecker;
         this.data[6][0] = this.data[6][2] = this.data[6][4] = this.data[6][6] = PieceType.BlackChecker;
         this.data[5][1] = this.data[5][3] = this.data[5][5] = this.data[5][7] = PieceType.BlackChecker;
+        
+        this.numWhiteCheckers = 12;
+        this.numBlackCheckers = 12;
     }
     
     private Board(Board board) {
@@ -27,10 +30,14 @@ public final class Board {
         for (int i = 0; i < 8; ++i) {
             System.arraycopy(board.data[i], 0, this.data[i], 0, 8);
         }
+        this.numWhiteCheckers = board.numWhiteCheckers;
+        this.numBlackCheckers = board.numBlackCheckers;
     }
     
-    private Board(PieceType[][] data) {
+    private Board(PieceType[][] data, int numWhiteCheckers, int numBlackCheckers) {
         this.data = data;
+        this.numWhiteCheckers = numWhiteCheckers;
+        this.numBlackCheckers = numBlackCheckers;
     }
     
     public boolean isWhiteWinner() {
@@ -111,7 +118,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row + 1][column + 1] = row == 6 ? PieceType.WhiteKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -123,7 +130,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row + 1][column - 1] = row == 6 ? PieceType.WhiteKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -137,7 +144,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row - 1][column + 1] = PieceType.WhiteKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -149,7 +156,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row - 1][column - 1] = PieceType.WhiteKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -165,7 +172,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row - 1][column + 1] = row == 1 ? PieceType.BlackKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -177,7 +184,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row - 1][column - 1] = row == 1 ? PieceType.BlackKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -191,7 +198,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row + 1][column + 1] = PieceType.BlackKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -203,7 +210,7 @@ public final class Board {
                         }
                         newData[row][column] = null;
                         newData[row + 1][column - 1] = PieceType.BlackKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers);
                         result.add(next);
                     }
                 }
@@ -226,7 +233,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row + 1][column + 1] = null;
                         newData[row + 2][column + 2] = row == 5 ? PieceType.WhiteKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers - 1);
                         List<Board> nextJumpMoves = next.getJumpMoves(row + 2, column + 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -246,7 +253,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row + 1][column - 1] = null;
                         newData[row + 2][column - 2] = row == 5 ? PieceType.WhiteKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers - 1);
                         List<Board> nextJumpMoves = next.getJumpMoves(row + 2, column - 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -268,7 +275,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row - 1][column + 1] = null;
                         newData[row - 2][column + 2] = PieceType.WhiteKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers - 1);
                         List<Board> nextJumpMoves = next.getJumpMoves(row - 2, column + 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -288,7 +295,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row - 1][column - 1] = null;
                         newData[row - 2][column - 2] = PieceType.WhiteKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers, this.numBlackCheckers - 1);
                         List<Board> nextJumpMoves = next.getJumpMoves(row - 2, column - 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -312,7 +319,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row - 1][column + 1] = null;
                         newData[row - 2][column + 2] = row == 2 ? PieceType.BlackKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers - 1, this.numBlackCheckers);
                         List<Board> nextJumpMoves = next.getJumpMoves(row - 2, column + 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -332,7 +339,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row - 1][column - 1] = null;
                         newData[row - 2][column - 2] = row == 2 ? PieceType.BlackKing : this.data[row][column];
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers - 1, this.numBlackCheckers);
                         List<Board> nextJumpMoves = next.getJumpMoves(row - 2, column - 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -354,7 +361,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row + 1][column + 1] = null;
                         newData[row + 2][column + 2] = PieceType.BlackKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers - 1, this.numBlackCheckers);
                         List<Board> nextJumpMoves = next.getJumpMoves(row + 2, column + 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -374,7 +381,7 @@ public final class Board {
                         newData[row][column] = null;
                         newData[row + 1][column - 1] = null;
                         newData[row + 2][column - 2] = PieceType.BlackKing;
-                        Board next = new Board(newData);
+                        Board next = new Board(newData, this.numWhiteCheckers - 1, this.numBlackCheckers);
                         List<Board> nextJumpMoves = next.getJumpMoves(row + 2, column - 2, isWhiteTurn);
                         if (nextJumpMoves.isEmpty()) {
                             result.add(next);
@@ -483,6 +490,14 @@ public final class Board {
         writer.flush();
     }
     
+    public int getNumWhiteCheckers() {
+        return this.numWhiteCheckers;
+    }
+    
+    public int getNumBlackCheckers() {
+        return this.numBlackCheckers;
+    }
+    
     @Override
     public boolean equals(Object other) {
         if (other instanceof Board) {
@@ -505,6 +520,8 @@ public final class Board {
     private boolean hasBlackPossibleMoves = false;
     private List<Board> whitePossibleMoves;
     private List<Board> blackPossibleMoves;
+    private int numWhiteCheckers;
+    private int numBlackCheckers;
     private final PieceType[][] data;
     
 }

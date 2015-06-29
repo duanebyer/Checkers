@@ -9,17 +9,20 @@ import java.io.PrintWriter;
 public class Main {
     
     public static void main(String[] args) {
-        Game game = new Game(new StupidCheckersPlayer(), new StupidCheckersPlayer());
+        Game game = new Game(new StupidCheckersPlayer(), new StupidCheckersPlayer(), 20);
         while (true) {
             game.getBoard().print(new PrintWriter(System.out));
-            int result = game.takeNextTurn();
-            if (result == -1) {
+            Game.Status result = game.takeNextTurn();
+            if (result == Game.Status.BlackWin) {
                 System.out.println("Black wins!");
                 break;
             }
-            if (result == 1) {
+            if (result == Game.Status.WhiteWin) {
                 System.out.println("White wins!");
                 break;
+            }
+            if (result == Game.Status.Tie) {
+                System.out.println("Tie!");
             }
         }
     }
