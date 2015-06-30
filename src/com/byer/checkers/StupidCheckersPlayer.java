@@ -16,13 +16,13 @@ public class StupidCheckersPlayer extends Player {
 
     @Override
     public Board getMove(Board board, boolean isWhite) {
-        System.out.println("I'm thinking hard.");
+        /*System.out.println("I'm thinking hard.");
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1);
         }
         catch (Exception exception) {
             
-        }
+        }*/
         List<Board> getMoves = board.getPossibleMoves(isWhite);
         return getMoves.get((int) (Math.random() * getMoves.size()));
     }
