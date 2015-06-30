@@ -435,6 +435,12 @@ public final class Board {
                 result.data[(pos1row + pos2row) / 2][(pos1col + pos2col) / 2] = null;
                 result.data[pos2row][pos2col] = result.data[pos1row][pos1col];
                 result.data[pos1row][pos1col] = null;
+                if (isWhiteTurn) {
+                    result.numBlackCheckers -= 1;
+                }
+                else {
+                    result.numWhiteCheckers -= 1;
+                }
             }
             if (isWhiteTurn && pos2row == 7) {
                 result.data[pos2row][pos2col] = PieceType.WhiteKing;
