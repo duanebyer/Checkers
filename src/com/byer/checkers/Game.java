@@ -14,6 +14,14 @@ public class Game {
         this.turnLimit = turnLimit;
     }
     
+    public boolean isWhiteTurn() {
+        return this.isWhiteTurn;
+    }
+    
+    public boolean isBlackTurn() {
+        return !this.isWhiteTurn;
+    }
+    
     public Status takeNextTurn() {
         turnsTaken ++;
         int numWhitePieces = this.board.getNumWhiteCheckers();
