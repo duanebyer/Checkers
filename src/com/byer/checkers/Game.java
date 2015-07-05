@@ -5,7 +5,7 @@ package com.byer.checkers;
  * @author Duane Byer
  */
 public class Game {
-    
+
     public Game(Player whitePlayer, Player blackPlayer, int turnLimit) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
@@ -15,6 +15,7 @@ public class Game {
     }
     
     public Status takeNextTurn() {
+        turnsTaken ++;
         int numWhitePieces = this.board.getNumWhiteCheckers();
         int numBlackPieces = this.board.getNumBlackCheckers();
         if (this.isWhiteTurn) {
@@ -54,6 +55,10 @@ public class Game {
         return this.board;
     }
     
+    public int getTurnsTaken() {
+        return turnsTaken;
+    }
+    
     public enum Status {
         WhiteWin,
         BlackWin,
@@ -67,5 +72,6 @@ public class Game {
     private final int turnLimit;
     private int turnsSinceLastCapture = 0;
     private boolean isWhiteTurn;
+    private int turnsTaken = 0;
     
 }
